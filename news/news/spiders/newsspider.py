@@ -10,8 +10,7 @@ class NewsSpider(scrapy.Spider):
                 ]
     
 
-    def parse(self, response):
-        
+    def parse(self, response):        
         # list of all available news links in a page.
         news_detail_links=response.css(".animated-fast a::attr('href')").extract()
         for link in news_detail_links:
@@ -27,8 +26,7 @@ class NewsSpider(scrapy.Spider):
         news_title=response.css('h1.alith_post_title::text').extract()
         news_author=response.css('div.article_author_name::text').extract()
         news_date=response.css('div.article_date::text').extract() 
-        news_content=response.css('article div.post-content div.single-content div.animate-box').extract()
-       
+        news_content=response.css('article div.post-content div.single-content div.animate-box p').extract()       
         # Adding data to items
         items['title']=news_title
         items['author']=news_author

@@ -25,11 +25,11 @@ class NewsPipeline:
                   ( date TEXT, author TEXT,title TEXT,content TEXT)''')
 
 
-    def process_item(self, item, spider):
-        data_to_insert=(item["date"],item["author"],item["title"],item["content"])
-        self.store_data(self,data_to_insert)
+    def process_item(self, item, spider): 
+        print(item)       
+        self.store_data(item)
         return item
     
-    def store_data(self,data_to_insert):
-        self.cursor.executemany('INSERT INTO news_table (date, author, title,content) VALUES (?, ?, ?,?)', data_to_insert)
+    def store_data(self,item):
+        self.cursor.execute('''INSERT INTO news_table  VALUES (?, ?, ?,?)''', (item['date'][0],item['author'][0],item['title'][0],item['content'][0]))
         self.connection.commit()
